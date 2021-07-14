@@ -6,27 +6,27 @@ function App() {
   let allGroceryProducts = [
     {
       name: "Butter",
-      price: [100],
+      price: 100,
     },
     {
       name: "Cake",
-      price: [50],
+      price: 50,
     },
     {
       name: "Biscuits",
-      price: [25],
+      price: 25,
     },
     {
       name: "Breed",
-      price: [20],
+      price: 20,
     },
     {
       name: "Chocolate",
-      price: [100],
+      price: 100,
     },
     {
       name: "Potato Chips",
-      price: [10],
+      price: 10,
     },
   ];
 
@@ -34,30 +34,70 @@ function App() {
 
   const [groceryItem, setGroceryItem] = useState([]);
 
-  const [productName, setName] = useState(null);
-  const [productPrice, setPrice] = useState(null);
-
-  const [multipleProduct, setMultipleProduct] = useState({});
-
   const [itemName, setItemName] = useState("");
   const [itemPrice, setItemPrice] = useState(null);
 
-  const [inputField, setInputField] = useState([{ name: "", Price: "" }]);
+  const [inputList, setInputList] = useState([{ name: "", price: null }]);
 
-  console.log(inputField);
+  // console.log(inputField);
   console.log("render");
 
-  const addProduct = () => {
-    let newProduct = { name: productName, price: [productPrice] };
-    let listCopy = productList.map((item) => {
-      return item;
-    });
-    listCopy.push(newProduct);
-    setProductList(listCopy);
-    console.log(listCopy);
-    setName("");
-    setPrice("");
+  const handleInputChange = (e, index) => {
+    let name = e.target.name;
+    let value = e.target.value;
+
+    const inputListCopy = [...inputList];
+    inputListCopy[index][name] = value;
+    setInputList(inputListCopy);
   };
+
+  const handleRemoveField = (index) => {
+    const inputListCopy = [...inputList];
+    inputListCopy.splice(index, 1);
+    setInputList(inputListCopy);
+  };
+
+  const handleAddField = () => {
+    setInputList([...inputList, { name: "", price: "" }]);
+  };
+
+  const handleAddProduct = () => {
+    setProductList([...productList, ...inputList]);
+    setInputList([{ name: "", price: "" }]);
+  };
+
+  const productInput = () =>
+    inputList.map((item, index) => (
+      <div className="product-input">
+        <h4>{`Product No.${index + 1}`}</h4>
+        <input
+          type="text"
+          name={`name`}
+          value={item.name}
+          placeholder="Product Name"
+          onChange={(e) => handleInputChange(e, index)}
+        />
+
+        <input
+          type="number"
+          name={`price`}
+          value={item.price}
+          placeholder="Product Price"
+          onChange={(e) => handleInputChange(e, index)}
+        />
+
+        <div className="input-btns">
+          {inputList.length !== 1 && (
+            <button onClick={() => handleRemoveField(index)}>
+              remove Product Field
+            </button>
+          )}
+          {inputList.length - 1 === index && (
+            <button onClick={handleAddField}>Add More Product</button>
+          )}
+        </div>
+      </div>
+    ));
 
   const addGroceryItem = () => {
     let newItem = { name: itemName, price: +itemPrice };
@@ -153,63 +193,14 @@ function App() {
     </table>
   );
 
-  let addPriceField = () =>
-    inputField.map((item, index) => (
-      <>
-        <h4>{`Product No.${index + 1}`}</h4>
-        <input
-          type="text"
-          name={`productName${index}`}
-          value={productName}
-          placeholder="Product Name"
-          onChange={handleInput}
-        />
-
-        <input
-          type="number"
-          name={`productPrice${index}`}
-          value={productPrice}
-          placeholder="Product Price"
-          onChange={handleInput}
-        />
-      </>
-    ));
-
-  const handleInput = () => {};
-
-  const productInput = () => (
-    <>
-      {addPriceField()}
-
-      <button
-        onClick={() => {
-          let copy = [...inputField];
-          copy.push({ name: "", price: "" });
-          setInputField(copy);
-        }}
-      >
-        Add More Product
-      </button>
-
-      <button onClick={addProduct}>Add Product</button>
-
-      <button
-        onClick={() => {
-          let copy = [...inputField];
-          copy.pop();
-          setInputField(copy);
-        }}
-      >
-        remove Product Field
-      </button>
-    </>
-  );
-
   return (
     <div className="container">
       <div className="grocery-item">{groceryItemDropDown()}</div>
       <div className="grocery-list">{groceryList()}</div>
-      <div className="grocery-input">{productInput()}</div>
+      <div className="grocery-input">
+        {productInput()}
+        <button onClick={handleAddProduct}>Add Product</button>
+      </div>
     </div>
   );
 }
