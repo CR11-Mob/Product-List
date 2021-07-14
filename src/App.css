@@ -1,0 +1,78 @@
+* {
+  box-sizing: border-box;
+  border: 1px solid red;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  /* justify-content: center; */
+}
+
+.grocery-item {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  /* border: none; */
+}
+
+.grocery-list {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
+  width: 40%;
+}
+
+.grocery-input {
+  width: 30%;
+}
+
+/***************** TABLE STYLE ****************/
+
+#grocery-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#grocery-table thead {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+  text-align: center;
+}
+
+#grocery-table th {
+  border: 1px solid #ddd;
+}
+
+#grocery-table tr,
+#grocery-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#grocery-table td {
+  text-align: left;
+}
+
+#grocery-table tbody > tr:hover {
+  background-color: #ddd;
+}
+
+#grocery-table tfoot {
+  background-color: whitesmoke;
+}
+
+h4 {
+  margin: 0px;
+}
