@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 body {
@@ -13,6 +13,8 @@ body {
   display: flex;
   height: 100vh;
   width: 100%;
+  margin: 0px;
+  padding: 0px;
   /* justify-content: center; */
 }
 
@@ -20,19 +22,20 @@ body {
   display: flex;
   flex-direction: column;
   width: 30%;
-  /* border: none; */
+  border: 2px solid #ddd;
 }
 
 .grocery-list {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
-  /* align-items: center; */
   width: 40%;
+  border: 2px solid #ddd;
 }
 
-.grocery-input {
+.input-section {
+  display: flex;
   width: 30%;
+  /* border: 2px solid #ddd; */
 }
 
 /***************** TABLE STYLE ****************/
@@ -71,8 +74,4 @@ body {
 
 #grocery-table tfoot {
   background-color: whitesmoke;
-}
-
-h4 {
-  margin: 0px;
 }

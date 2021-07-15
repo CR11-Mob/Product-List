@@ -2,6 +2,8 @@ import "./App.css";
 
 import { useState } from "react";
 
+import ProductsInput from "./components/ProductsInput";
+
 function App() {
   let allGroceryProducts = [
     {
@@ -32,72 +34,16 @@ function App() {
 
   const [productList, setProductList] = useState(allGroceryProducts);
 
+  const [inputList, setInputList] = useState([{ name: "", price: null }]);
+
   const [groceryItem, setGroceryItem] = useState([]);
 
   const [itemName, setItemName] = useState("");
   const [itemPrice, setItemPrice] = useState(null);
 
-  const [inputList, setInputList] = useState([{ name: "", price: null }]);
+  const [error, setError] = useState(true);
 
-  // console.log(inputField);
   console.log("render");
-
-  const handleInputChange = (e, index) => {
-    let name = e.target.name;
-    let value = e.target.value;
-
-    const inputListCopy = [...inputList];
-    inputListCopy[index][name] = value;
-    setInputList(inputListCopy);
-  };
-
-  const handleRemoveField = (index) => {
-    const inputListCopy = [...inputList];
-    inputListCopy.splice(index, 1);
-    setInputList(inputListCopy);
-  };
-
-  const handleAddField = () => {
-    setInputList([...inputList, { name: "", price: "" }]);
-  };
-
-  const handleAddProduct = () => {
-    setProductList([...productList, ...inputList]);
-    setInputList([{ name: "", price: "" }]);
-  };
-
-  const productInput = () =>
-    inputList.map((item, index) => (
-      <div className="product-input">
-        <h4>{`Product No.${index + 1}`}</h4>
-        <input
-          type="text"
-          name={`name`}
-          value={item.name}
-          placeholder="Product Name"
-          onChange={(e) => handleInputChange(e, index)}
-        />
-
-        <input
-          type="number"
-          name={`price`}
-          value={item.price}
-          placeholder="Product Price"
-          onChange={(e) => handleInputChange(e, index)}
-        />
-
-        <div className="input-btns">
-          {inputList.length !== 1 && (
-            <button onClick={() => handleRemoveField(index)}>
-              remove Product Field
-            </button>
-          )}
-          {inputList.length - 1 === index && (
-            <button onClick={handleAddField}>Add More Product</button>
-          )}
-        </div>
-      </div>
-    ));
 
   const addGroceryItem = () => {
     let newItem = { name: itemName, price: +itemPrice };
@@ -196,10 +142,18 @@ function App() {
   return (
     <div className="container">
       <div className="grocery-item">{groceryItemDropDown()}</div>
+
       <div className="grocery-list">{groceryList()}</div>
-      <div className="grocery-input">
-        {productInput()}
-        <button onClick={handleAddProduct}>Add Product</button>
+
+      <div className="input-section">
+        <ProductsInput
+          productList={productList}
+          setProductList={setProductList}
+          inputList={inputList}
+          setInputList={setInputList}
+          error={error}
+          setError={setError}
+        />
       </div>
     </div>
   );
