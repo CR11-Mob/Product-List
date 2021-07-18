@@ -37,13 +37,23 @@ function App() {
     productType["fruits & vegetables"]
   );
 
-  const [addProductState, setAddProductState] = useState([]);
+  const [addProductState, setAddProductState] = useState(productType);
 
   const [inputList, setInputList] = useState([{ name: "", price: "" }]);
 
   const [groceryItem, setGroceryItem] = useState([]);
 
   const [error, setError] = useState(true);
+
+  const [listItemSubCategory, setListItemSubCategory] = useState(
+    subCategory.grocery
+  );
+
+  const [listItemProductType, setListItemProductType] = useState(
+    productType["fruits & vegetables"]
+  );
+
+  console.log(listItemProductType);
 
   console.log("render");
 
@@ -57,43 +67,57 @@ function App() {
     }
   };
 
-  // const groceryItemDropDown = () => (
-  //   <>
-  //     <label>
-  //       Select Grocery:
-  //       <select
-  //         value={itemName}
-  //         onChange={(e) => setItemName(e.target.value)}
-  //         disabled={!productList.length}
-  //       >
-  //         {productList.map((item) => {
-  //           return (
-  //             <option key={item.name} value={item.name}>
-  //               {item.name}
-  //             </option>
-  //           );
-  //         })}
-  //       </select>
-  //     </label>
-  //     <label>
-  //       Price List:
-  //       <select
-  //         value={itemPrice}
-  //         onChange={(e) => setItemPrice(e.target.value)}
-  //         disabled={!productList.length}
-  //       >
-  //         {productList.map((item, index) => {
-  //           return (
-  //             <option key={index} value={item.price}>
-  //               {item.price}
-  //             </option>
-  //           );
-  //         })}
-  //       </select>
-  //     </label>
-  //     <button onClick={addGroceryItem}>Add Grocery</button>
-  //   </>
-  // );
+  const handleCategoryChange = (e) => {
+    let value = e.target.value;
+    console.log(value);
+
+    setListItemSubCategory(subCategory[value]);
+  };
+
+  const handleSubCategory = (e) => {
+    let value = e.target.value;
+    console.log("Sub category", value);
+
+    // console.log("--- ", productType[value]);
+    setListItemProductType(productType[value]);
+  };
+
+  const groceryItemDropDown = () => (
+    <>
+      <label>Category</label>
+
+      <select name={`list-categories`} onChange={handleCategoryChange}>
+        {category.map((item) => {
+          return (
+            <option key={item} name={item} value={item}>
+              {item}
+            </option>
+          );
+        })}
+      </select>
+
+      <select name={`list-sub-categories`} onChange={handleSubCategory}>
+        {listItemSubCategory.map((item) => {
+          return (
+            <option key={item} name={item} value={item}>
+              {item}
+            </option>
+          );
+        })}
+      </select>
+
+      <select name={`list-items`} onChange={handleSubCategory}>
+        {listItemProductType.map((item) => {
+          return (
+            <option key={item.name} name={item.name} value={item.name}>
+              {item.name}
+              {item.price}
+            </option>
+          );
+        })}
+      </select>
+    </>
+  );
 
   const groceryList = () => (
     <table id="grocery-table">
@@ -133,7 +157,7 @@ function App() {
 
   return (
     <div className="container">
-      <div className="grocery-item"></div>
+      <div className="grocery-item">{groceryItemDropDown()}</div>
 
       <div className="grocery-list">{groceryList()}</div>
 

@@ -24,10 +24,18 @@ export default function ProductsInput(props) {
 
     setSubCategoryState(subCategory[value]);
   };
+  useEffect(() => {
+    console.log("inppppuuutt", inputList);
+  }, [props.inputList]);
 
-  const handleSubCategory = (e) => {
+  const handleSubCategory = (e, index) => {
     let value = e.target.value;
     console.log("Sub category", value);
+    let name = e.target.name;
+
+    const inputListCopy = [...inputList];
+    inputListCopy[index][name] = value;
+    setInputList(inputListCopy);
 
     // console.log("--- ", productType[value]);
     setProductTypeState(productType[value]);
@@ -54,7 +62,22 @@ export default function ProductsInput(props) {
   };
 
   const handleAddProduct = () => {
-    setProductTypeState([...productTypeState, ...inputList]);
+    let inputsCopy = [...inputList];
+    let addProductStateCopy = { ...addProductState };
+
+    for (let i = 0; i < inputList.length; i++) {
+      console.log("lllliiiisssttt", inputList[i]["sub-categories"]);
+      console.log("all producst", addProductStateCopy);
+      const sub = inputsCopy[i]["sub-categories"];
+      delete inputsCopy[i]["sub-categories"];
+
+      addProductStateCopy[sub].push(inputsCopy[i]);
+    }
+    console.log({ addProductStateCopy });
+    setAddProductState(addProductStateCopy);
+    // setProductTypeState([...productTypeState, ...inputList]);
+    // let productsObjCopy = { ...addProductState };
+    // console.log(productsObjCopy[productTypeState]);
     setInputList([{ name: "", price: "" }]);
     console.log(productTypeState);
   };
@@ -63,32 +86,6 @@ export default function ProductsInput(props) {
     console.log(productTypeState);
     console.log(productType);
   }, [productTypeState, productType]);
-
-  const categoryElements = () => (
-    <>
-      <label>Category</label>
-
-      <select name={`categories`} onChange={handleCategoryChange}>
-        {category.map((item) => {
-          return (
-            <option key={item} name={item} value={item}>
-              {item}
-            </option>
-          );
-        })}
-      </select>
-
-      <select name={`sub-categories`} onChange={handleSubCategory}>
-        {subCategoryState.map((item) => {
-          return (
-            <option key={item} name={item} value={item}>
-              {item}
-            </option>
-          );
-        })}
-      </select>
-    </>
-  );
 
   const inputElements = (item, index) => (
     <>
@@ -153,24 +150,51 @@ export default function ProductsInput(props) {
       </span>
     );
 
-  const allElements = () =>
-    inputList.map((item, index) => (
-      <div className="product-input">
-        <h4>{`Product No.${index + 1}`}</h4>
-        {categoryElements()}
-
-        {inputElements(item, index)}
-
-        <div className="input-btns">
-          {removeBtnElements(index)}
-          {addBtnElements(index)}
-        </div>
-      </div>
-    ));
-
   const addProductElement = () => (
     <>
-      <div className="input-area"> {allElements()}</div>
+      <div className="input-area">
+        {" "}
+        {inputList.map((item, index) => (
+          <div className="product-input">
+            <h4>{`Product No.${index + 1}`}</h4>
+            {
+              <>
+                <label>Category</label>
+
+                <select name={`categories`} onChange={handleCategoryChange}>
+                  {category.map((item) => {
+                    return (
+                      <option key={item} name={item} value={item}>
+                        {item}
+                      </option>
+                    );
+                  })}
+                </select>
+
+                <select
+                  name={`sub-categories`}
+                  onChange={(e) => handleSubCategory(e, index)}
+                >
+                  {subCategoryState.map((item) => {
+                    return (
+                      <option key={item} name={item} value={item}>
+                        {item}
+                      </option>
+                    );
+                  })}
+                </select>
+              </>
+            }
+
+            {inputElements(item, index)}
+
+            <div className="input-btns">
+              {removeBtnElements(index)}
+              {addBtnElements(index)}
+            </div>
+          </div>
+        ))}
+      </div>
 
       <div className="add-btn-area">
         <span onClick={handleAddProduct}>ADD PRODUCT</span>
