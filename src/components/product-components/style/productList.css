@@ -1,0 +1,37 @@
+/***************** TABLE STYLE ****************/
+
+#grocery-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#grocery-table thead {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+  text-align: center;
+}
+
+#grocery-table th {
+  border: 1px solid #ddd;
+}
+
+#grocery-table tr,
+#grocery-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#grocery-table td {
+  text-align: left;
+}
+
+#grocery-table tbody > tr:hover {
+  background-color: #ddd;
+}
+
+#grocery-table tfoot {
+  background-color: whitesmoke;
+}

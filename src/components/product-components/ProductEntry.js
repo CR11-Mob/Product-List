@@ -48,7 +48,8 @@ export default function ProductEntry(props) {
 
   const handleRemoveBtn = (index) => {
     let inputListCopy = [...inputList];
-    inputListCopy.splice(index, 1);
+    let spliceItem = inputListCopy.splice(index, 1);
+    console.log("splice item:", spliceItem);
     setInputList(inputListCopy);
   };
 
@@ -139,7 +140,10 @@ export default function ProductEntry(props) {
 
             <div className="add-remove-btn">
               {inputList.length !== 1 && (
-                <span onClick={handleRemoveBtn} style={{ color: "red" }}>
+                <span
+                  onClick={() => handleRemoveBtn(index)}
+                  style={{ color: "red" }}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"

@@ -1,0 +1,32 @@
+.heading {
+  margin: 10px 0px;
+  text-align: center;
+  width: 100%;
+}
+
+.product-dropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.add-to-list button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 2px;
+  color: whitesmoke;
+  margin: 10px 0px;
+  padding: 10px 0px;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+
+.add-to-list button:hover {
+  background-color: #3c8d3f;
+}
