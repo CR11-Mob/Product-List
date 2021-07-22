@@ -1,4 +1,4 @@
-import "./style/ProductList.css";
+import "./style/productList.css";
 
 export default function ProductList(props) {
   const { products } = props;
